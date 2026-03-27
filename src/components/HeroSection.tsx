@@ -42,7 +42,7 @@ const HeroSection = () => {
       ref={ref}
       className="
         relative 
-        min-h-[100svh] sm:min-h-[110vh] md:min-h-[120vh]
+        min-h-svh sm:min-h-[110vh] md:min-h-[120vh]
         flex items-center 
         overflow-hidden
       "
@@ -68,7 +68,7 @@ const HeroSection = () => {
         />
 
         {/* Subtle scanline */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_3px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[100%_3px]" />
       </motion.div>
 
       {/* 🧱 CONTENT */}
@@ -87,7 +87,7 @@ const HeroSection = () => {
                 text-[clamp(2rem,6vw,4.5rem)] 
                 md:text-5xl lg:text-6xl xl:text-7xl
                 text-cyan-400 opacity-20
-                blur-[8px] sm:blur-[12px] lg:blur-[14px]
+                blur-sm sm:blur-md lg:blur-[14px]
                 scale-[1.02] sm:scale-105
                 leading-[1.1] sm:leading-[1.05] lg:leading-none
               "
@@ -103,7 +103,7 @@ const HeroSection = () => {
                 text-[clamp(2rem,6vw,4.5rem)] 
                 md:text-5xl lg:text-6xl xl:text-7xl
                 text-cyan-400 opacity-40
-                blur-[4px] sm:blur-[6px]
+                blur-xs sm:blur-[6px]
                 leading-[1.1] sm:leading-[1.05] lg:leading-none
               "
             >
