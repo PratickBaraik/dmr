@@ -62,7 +62,7 @@ export default function Navbar() {
           {/* 🔵 CENTER (MOBILE) */}
           <div className="absolute left-1/2 -translate-x-1/2 sm:hidden">
             <a href="/">
-              <span className="font-display text-white tracking-[0.12em] text-sm">
+              <span className="font-display text-white tracking-[0.12em] text-3xl">
                 DMR
               </span>
             </a>
