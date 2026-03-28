@@ -4,7 +4,21 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
-export default function Navbar() {
+/**
+ * 🔷 TYPE DEFINITIONS
+ */
+type NavItem = {
+  label: string;
+  href: string;
+};
+
+type Props = {
+  menu?: NavItem[];
+};
+
+export default function Navbar({
+  menu = [{ label: "About", href: "/about" }], // ✅ default fallback
+}: Props) {
   const [open, setOpen] = useState(false);
 
   /**
@@ -25,7 +39,7 @@ export default function Navbar() {
           overflow-hidden
         "
       >
-        {/* ✨ SUBTLE CYBER LINE */}
+        {/* ✨ CYBER LINE */}
         <div className="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-cyan-400/40 to-transparent" />
 
         <div
@@ -37,29 +51,18 @@ export default function Navbar() {
             relative
           "
         >
-          {/* 🟢 LEFT: LOGO */}
+          {/* 🟢 LOGO */}
           <div className="flex items-center gap-3">
             <a href="/" className="flex items-center gap-3 group">
               <div className="w-8 h-8 rounded-full bg-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.7)]" />
 
-              {/* Desktop brand */}
-              <span
-                className="
-                  hidden sm:block
-                  font-display
-                  text-white
-                  tracking-[0.12em]
-                  text-3xl
-                  group-hover:text-cyan-300
-                  transition
-                "
-              >
+              <span className="hidden sm:block font-display text-white tracking-[0.12em] text-3xl group-hover:text-cyan-300 transition">
                 DMR
               </span>
             </a>
           </div>
 
-          {/* 🔵 CENTER (MOBILE) */}
+          {/* 🔵 CENTER (MOBILE LOGO) */}
           <div className="absolute left-1/2 -translate-x-1/2 sm:hidden">
             <a href="/">
               <span className="font-display text-white tracking-[0.12em] text-3xl">
@@ -68,45 +71,42 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* 🟣 RIGHT (DESKTOP) */}
+          {/* 🟣 DESKTOP MENU */}
           <div className="hidden sm:flex items-center gap-6 md:gap-8">
-            <a
-              href="/about"
-              className="
-                relative
-                font-body
-                text-zinc-300 text-sm md:text-base
+            {menu.map((item, i) => (
+              <a
+                key={i}
+                href={item.href}
+                className="
+                  relative
+                  font-body
+                  text-zinc-300 text-sm md:text-base
+                  hover:text-white transition
 
-                hover:text-white transition
+                  after:absolute after:left-0 after:-bottom-1
+                  after:h-px after:w-0
+                  after:bg-cyan-400
+                  hover:after:w-full
+                  after:transition-all after:duration-300
+                "
+              >
+                {item.label}
+              </a>
+            ))}
 
-                after:absolute after:left-0 after:-bottom-1
-                after:h-px after:w-0
-                after:bg-cyan-400
-                hover:after:w-full
-                after:transition-all after:duration-300
-              "
-            >
-              About
-            </a>
-
+            {/* CTA */}
             <button
               className="
                 inline-flex items-center justify-center
                 px-5 py-2
                 rounded-lg
-
                 font-body text-sm font-medium
-
                 bg-cyan-400 text-black
-
                 border border-cyan-300/40
-
                 shadow-[0_0_15px_rgba(34,211,238,0.4)]
                 hover:shadow-[0_0_30px_rgba(34,211,238,0.9)]
-
                 hover:-translate-y-px
                 active:scale-95
-
                 transition-all duration-300
               "
             >
@@ -114,27 +114,21 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* 📱 MOBILE MENU BUTTON */}
+          {/* 📱 MOBILE BUTTON */}
           <button
             onClick={() => setOpen(true)}
-            className="
-              sm:hidden 
-              text-white 
-              p-2 rounded-md
-              hover:bg-white/5
-              transition
-            "
+            className="sm:hidden text-white p-2 rounded-md hover:bg-white/5 transition"
           >
             <Menu size={24} />
           </button>
         </div>
       </nav>
 
-      {/* 📱 OFFCANVAS MENU */}
+      {/* 📱 MOBILE MENU */}
       <AnimatePresence>
         {open && (
           <>
-            {/* 🔲 BACKDROP */}
+            {/* BACKDROP */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -143,7 +137,7 @@ export default function Navbar() {
               className="fixed inset-0 bg-black/80 z-40 backdrop-blur-sm"
             />
 
-            {/* 📦 PANEL */}
+            {/* PANEL */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -153,18 +147,15 @@ export default function Navbar() {
                 fixed top-0 right-0 h-full
                 w-[80%] sm:w-[60%] max-w-sm
                 bg-linear-to-b from-zinc-900 to-black
-
                 border-l border-white/10
-
                 z-50
                 p-6 sm:p-8
                 flex flex-col
               "
             >
-              {/* ✨ GLOW EDGE */}
               <div className="absolute left-0 top-0 h-full w-px bg-cyan-400/30" />
 
-              {/* ❌ CLOSE */}
+              {/* HEADER */}
               <div className="flex justify-between items-center">
                 <span className="font-display text-white tracking-widest">
                   DMR
@@ -178,36 +169,35 @@ export default function Navbar() {
                 </button>
               </div>
 
-              {/* 🔗 MENU ITEMS */}
+              {/* MENU ITEMS */}
               <div className="mt-14 flex flex-col gap-8">
-                <a
-                  href="/about"
-                  onClick={() => setOpen(false)}
-                  className="
-                    font-heading
-                    text-lg
-                    text-white
+                {menu.map((item, i) => (
+                  <a
+                    key={i}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="
+                      font-heading
+                      text-lg
+                      text-white
+                      hover:text-cyan-300
+                      transition
+                    "
+                  >
+                    {item.label}
+                  </a>
+                ))}
 
-                    hover:text-cyan-300
-                    transition
-                  "
-                >
-                  About
-                </a>
-
+                {/* CTA */}
                 <button
                   className="
                     w-fit
                     inline-flex items-center justify-center
                     px-6 py-2.5
                     rounded-lg
-
                     font-body text-sm font-medium
-
                     bg-cyan-400 text-black
-
                     border border-cyan-300/40
-
                     shadow-[0_0_20px_rgba(34,211,238,0.5)]
                   "
                 >

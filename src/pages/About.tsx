@@ -1,14 +1,22 @@
-// import HeroSection from "../components/HeroSection";
-// import Existence from "../components/sections/Existence";
 import Navbar from "../layout/NavBar";
 import Footer from "../layout/Footer";
+import Introduction from "../components/sections/Introduction";
+import TeamSection from "../components/sections/TeamMember";
+import JoinSection from "../components/sections/JointSection";
 
-export default function About() {
+/**
+ * 🔷 MENU CONFIG (PAGE-SPECIFIC)
+ */
+const menu = [{ label: "Home", href: "/" }];
+
+export default function Landing() {
   return (
     <>
-      <Navbar />
-      {/* <HeroSection /> */}
-      {/* <Existence /> */}
+      {/* ✅ PASS MENU HERE */}
+      <Navbar menu={menu} />
+      <Introduction />
+      <TeamSection />
+      <JoinSection />
       <Footer />
     </>
   );

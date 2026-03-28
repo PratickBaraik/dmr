@@ -4,18 +4,23 @@ import Purpose from "../components/sections/Purpose";
 import Navbar from "../layout/NavBar";
 import Footer from "../layout/Footer";
 
-import { purposeData } from "../../data/PurposePoints"; // ✅ correct import
+import { purposeData } from "../../data/PurposePoints";
+
+/**
+ * 🔷 MENU CONFIG (PAGE-SPECIFIC)
+ */
+const menu = [{ label: "About", href: "/about" }];
 
 export default function Landing() {
   return (
     <>
-      <Navbar />
+      {/* ✅ PASS MENU HERE */}
+      <Navbar menu={menu} />
 
       <HeroSection />
 
       <Existence />
 
-      {/* ✅ PASS DATA */}
       <Purpose data={purposeData} />
 
       <Footer />
