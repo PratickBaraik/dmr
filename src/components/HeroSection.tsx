@@ -1,52 +1,44 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import HeroCanvas from "../assets/herocanva.png";
 
-const HeroSection = () => {
-  const ref = useRef<HTMLDivElement | null>(null);
+/**
+ * 🎬 Hero Section (Self-contained scroll)
+ */
+export default function HeroSection() {
+  /**
+   * 🌍 LOCAL SCROLL (global page)
+   */
+  const { scrollYProgress } = useScroll();
 
   /**
-   * Scroll tracking
+   * 🎬 Smooth cinematic feel
    */
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
   });
 
   /**
-   * Foreground motion (reduced for responsiveness)
+   * 🎞️ CONTENT ANIMATION
    */
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.7, 1],
-    [1, 1, 0.4, 0],
-  );
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, -70]);
+  const opacity = useTransform(smooth, [0, 0.25], [1, 0]);
+  const y = useTransform(smooth, [0, 0.25], [0, -80]);
 
   /**
-   * Background motion (depth effect)
+   * 🌌 BACKGROUND PARALLAX
    */
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const bgScale = useTransform(smooth, [0, 1], [1, 1.1]);
+  const bgY = useTransform(smooth, [0, 1], [0, 60]);
 
   /**
-   * Glow intensity
+   * ✨ GLOW EFFECT
    */
-  const glow = useTransform(scrollYProgress, [0, 1], [0.4, 0.8]);
+  const glow = useTransform(smooth, [0, 1], [0.3, 0.7]);
 
   return (
-    <section
-      ref={ref}
-      className="
-        relative 
-        min-h-svh sm:min-h-[110vh] md:min-h-[120vh]
-        flex items-center 
-        overflow-hidden
-      "
-    >
+    <section className="relative min-h-svh sm:min-h-[110vh] md:min-h-[120vh] flex items-center overflow-hidden">
       {/* 🔲 BACKGROUND */}
       <motion.div
         style={{ scale: bgScale, y: bgY }}
@@ -58,125 +50,87 @@ const HeroSection = () => {
           className="w-full h-full object-cover object-center"
         />
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/75 sm:bg-black/65 md:bg-black/55 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
 
-        {/* Cyan lighting */}
         <motion.div
           style={{ opacity: glow }}
           className="absolute inset-0 bg-cyan-500/10 mix-blend-overlay"
         />
-
-        {/* Subtle scanline */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[100%_3px]" />
       </motion.div>
 
       {/* 🧱 CONTENT */}
       <div className="w-full max-w-7xl mx-auto px-5 sm:px-6 md:px-10 lg:px-16">
-        <motion.div
-          style={{ opacity, y }}
-          className="max-w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl"
-        >
-          {/* 🔥 HEADING */}
-          <div className="relative">
-            {/* 🔵 OUTER AURA */}
-            <h1
-              className="
-                absolute inset-0
-                font-techno font-bold tracking-[0.06em] sm:tracking-[0.08em]
-                text-[clamp(2rem,6vw,4.5rem)] 
-                md:text-5xl lg:text-6xl xl:text-7xl
-                text-cyan-400 opacity-20
-                blur-sm sm:blur-md lg:blur-[14px]
-                scale-[1.02] sm:scale-105
-                leading-[1.1] sm:leading-[1.05] lg:leading-none
-              "
-            >
-              Run Beyond Limits
-            </h1>
-
-            {/* 🔷 MID GLOW */}
-            <h1
-              className="
-                absolute inset-0
-                font-techno font-bold tracking-[0.06em] sm:tracking-[0.08em]
-                text-[clamp(2rem,6vw,4.5rem)] 
-                md:text-5xl lg:text-6xl xl:text-7xl
-                text-cyan-400 opacity-40
-                blur-xs sm:blur-[6px]
-                leading-[1.1] sm:leading-[1.05] lg:leading-none
-              "
-            >
-              Run Beyond Limits
-            </h1>
-
-            {/* ✨ CORE LIGHT */}
-            <h1
-              className="
-                absolute inset-0
-                font-techno font-bold tracking-[0.06em] sm:tracking-[0.08em]
-                text-[clamp(2rem,6vw,4.5rem)] 
-                md:text-5xl lg:text-6xl xl:text-7xl
-                text-cyan-300 opacity-70
-                leading-[1.1] sm:leading-[1.05] lg:leading-none
-              "
-              style={{
-                textShadow: "0 0 12px rgba(34,211,238,0.8)",
-              }}
-            >
-              Run Beyond Limits
-            </h1>
-
-            {/* 🧠 MAIN TEXT */}
-            <h1
-              className="
-                relative
-                font-techno font-bold text-white
-                tracking-[0.06em] sm:tracking-[0.08em]
-
-                text-[clamp(2rem,6vw,4.5rem)] 
-                md:text-5xl lg:text-6xl xl:text-7xl
-
-                leading-[1.1] sm:leading-[1.05] lg:leading-none
-              "
-            >
-              Run Beyond Limits
-            </h1>
-          </div>
-
-          {/* 📝 DESCRIPTION */}
+        <motion.div style={{ opacity, y }} className="max-w-xl lg:max-w-2xl">
+          {/* 🧠 MICRO LABEL */}
           <p
             className="
-              mt-4 sm:mt-6
-              font-body
-              text-sm sm:text-base md:text-lg
-              text-zinc-300
-              leading-relaxed
-              max-w-md sm:max-w-lg
-            "
+    font-heading
+    text-cyan-400/80
+
+    text-sm sm:text-base md:text-lg   /* ⬆ increased */
+
+    tracking-[0.25em]                 /* ⬆ more airy */
+    uppercase
+    mb-4                              /* ⬆ better spacing */
+  "
           >
+            Endurance • Discipline • Growth
+          </p>
+
+          {/* 🔥 HERO HEADING */}
+          <h1
+            className="
+    font-display
+    text-white
+    tracking-[0.06em]
+
+    text-[clamp(2.8rem,7vw,5.5rem)]   /* ⬆ stronger base */
+    md:text-6xl lg:text-7xl xl:text-8xl /* ⬆ dominant scale */
+
+    leading-[1.02]                    /* ⬆ tighter for impact */
+  "
+            style={{
+              textShadow:
+                "0 0 25px rgba(34,211,238,0.45)" /* ⬆ stronger glow */,
+            }}
+          >
+            <span className="block text-cyan-400/80">Run Beyond</span>
+            <span className="block">Limits</span>
+          </h1>
+
+          {/* 🧱 SUBHEADING */}
+          <h2
+            className="
+    font-heading
+    mt-4
+
+    text-zinc-300
+
+    text-base sm:text-lg md:text-xl lg:text-2xl  /* ⬆ scaled properly */
+
+    tracking-wide
+    leading-relaxed
+  "
+          >
+            Built for consistency. Designed for performance.
+          </h2>
+
+          <p className="mt-5 sm:mt-6 font-body text-sm sm:text-base md:text-lg text-zinc-300 leading-relaxed max-w-md sm:max-w-lg">
             Join a community where discipline meets endurance. Train with
             focused runners, stay consistent, and push beyond your limits with a
             system built for long-term performance.
           </p>
 
-          {/* 🎯 CTA */}
-          <div className="mt-7 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4">
             <button
               className="
-                px-5 py-2.5 sm:px-6 sm:py-3
-                rounded-xl 
+                font-body px-6 py-3 rounded-xl 
                 bg-cyan-400 text-black font-medium
-                text-sm sm:text-base
-
                 border border-cyan-300/40
-
                 shadow-[0_0_20px_rgba(34,211,238,0.4)]
-                hover:shadow-[0_0_35px_rgba(34,211,238,0.8)]
-
+                hover:shadow-[0_0_40px_rgba(34,211,238,0.9)]
                 hover:scale-105 active:scale-95
                 transition-all duration-300
-
                 w-full sm:w-auto
               "
             >
@@ -187,6 +141,4 @@ const HeroSection = () => {
       </div>
     </section>
   );
-};
-
-export default HeroSection;
+}

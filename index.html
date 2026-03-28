@@ -12,19 +12,19 @@
       content="Join a community of runners focused on endurance, consistency, and growth. Train together. Run stronger."
     />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://your-domain.vercel.app/" />
+    <link rel="canonical" href="https://dmr-omega.vercel.app/" />
 
-    <!-- 🌐 OPEN GRAPH (SOCIAL SHARING) -->
+    <!-- 🌐 OPEN GRAPH -->
     <meta property="og:title" content="DMR | Run Beyond Limits" />
     <meta
       property="og:description"
       content="Train with a community built for consistency, endurance, and growth."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://your-domain.vercel.app/" />
+    <meta property="og:url" content="https://dmr-omega.vercel.app/" />
     <meta property="og:image" content="/preview.png" />
 
-    <!-- 🐦 TWITTER CARD -->
+    <!-- 🐦 TWITTER -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="DMR | Run Beyond Limits" />
     <meta
@@ -36,32 +36,31 @@
     <!-- 🎯 FAVICON -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- 🎨 THEME -->
+    <meta name="theme-color" content="#000000" />
+
     <!-- ⚡ PERFORMANCE: Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- ⚡ PERFORMANCE: Preload Fonts -->
+    <!-- ⚡ LOAD ALL FONTS IN ONE REQUEST -->
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bahiana&family=Orbitron:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
     />
 
-    <!-- 🔤 Fonts (Non-blocking) -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bahiana&family=Orbitron:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media = 'all'"
     />
 
-    <!-- 🎨 THEME -->
-    <meta name="theme-color" content="#000000" />
-
-    <!-- 📱 PWA (Optional but recommended) -->
+    <!-- 📱 PWA -->
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- 🧱 PERFORMANCE: Reduce CLS -->
+    <!-- 🧱 GLOBAL FONT SYSTEM -->
     <style>
       html,
       body,
@@ -69,10 +68,27 @@
         height: 100%;
         margin: 0;
       }
+
+      /* 🔤 FONT ROLES (NO CONFLICT SYSTEM) */
+
+      /* Default → BODY */
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+
+      /* Display → HERO / BRAND */
+      .font-display {
+        font-family: "Bahiana", cursive;
+      }
+
+      /* Headings → STRUCTURE */
+      .font-heading {
+        font-family: "Orbitron", sans-serif;
+      }
     </style>
   </head>
 
-  <body class="bg-black text-white">
+  <body class="bg-black text-white antialiased">
     <noscript> You need to enable JavaScript to run this app. </noscript>
 
     <div id="root"></div>
